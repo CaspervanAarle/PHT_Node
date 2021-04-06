@@ -18,7 +18,9 @@ When running locally, every node needs a different port to which it can bind a s
 ```python src/main.py```
 
 setting a new config:
+
 port: the port where the central aggregator can connect to.
+
 csv_location: location of the data (e.g. "C:\path\to\dataset\1.csv")
 
 See the [PHT_Synth_Data_Gen](https://github.com/CaspervanAarle/PHT_Synth_Data_Gen) to generate a sample
