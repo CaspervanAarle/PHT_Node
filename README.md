@@ -11,7 +11,7 @@ This repository is part of the Personal Health Train Locker Thesis.
 ### Manual
 This project uses Python Sockets as a form of communication. The PHT Node is the Locker containing some information. The central PHT Server can connect to multiple PHT Nodes, receiving requests and sending them back to the server.
 
-Change the IP ADDRESS to localhost for local testing or you ipv4 default gateway for network connections.
+In ```main.py```, change the IP ADDRESS to localhost for local testing or you ipv4 default gateway for network connections.
 
 When running locally, every node needs a different port to which it can bind a socket. When running on multiple devices, this is not necessary, but change the ip address accordingly.
 
