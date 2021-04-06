@@ -27,5 +27,6 @@ See the [PHT_Synth_Data_Gen](https://github.com/CaspervanAarle/PHT_Synth_Data_Ge
 
 
 ### Generator
+To generate multiple lockers (100?) as a simulation tool
 
 To be implemented
