@@ -17,14 +17,17 @@ import math
 from classifier_methods import LinReg, LogReg
 from aggregate_methods import FedSGD_Client
 from data_scaler import DataScaler
+import keygen
 
 # homomorphic encryption
 from phe import paillier
-with open('..//enc//public', 'rb') as f:
-    public_key = pickle.load(f)
-with open('..//enc//private', 'rb') as f:
-    private_key = pickle.load(f)
-
+try:
+    public_key, private_key = keygen.load_keys()
+except Exception:
+    keygen.create_keys()
+    public_key, private_key = keygen.load_keys()
+     
+     
 # ADJUSTABLE PARAMETERS:
 HOST = "192.168.0.24"
 model_class = LinReg
