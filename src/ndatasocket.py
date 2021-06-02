@@ -22,11 +22,8 @@ class Data():
                 data = pd.read_csv(self.direc).iloc[0].values.tolist()
             else:
                 data = pd.read_csv(self.direc)[self.var_list].iloc[0].values.tolist()
-        else:
-            # TODO: no personal locker
-            pass
-        
-        return np.array([data])
+        return np.array([data]).astype(float)
+    
     
     def load_target(self):
         if(self.is_personal_locker):
@@ -34,9 +31,4 @@ class Data():
                 data = pd.read_csv(self.direc).iloc[0].values.tolist()
             else:
                 data = pd.read_csv(self.direc)[self.tar_list].iloc[0].values.tolist()
-        else:
-            # TODO: no personal locker
-            pass
-        
         return data
-    

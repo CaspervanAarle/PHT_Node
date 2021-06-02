@@ -19,13 +19,16 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 class IPC_Server():
     def __init__(self, host, port):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind((host, int(port)))
-        s.listen()
-        conn, addr = s.accept()
-        self.conn = conn
-        self.addr = addr
-        print('Aggregator connected with this locker from: ', addr)
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.bind((host, int(port)))
+            s.listen()
+            conn, addr = s.accept()
+            self.conn = conn
+            self.addr = addr
+            print('Aggregator connected with this locker from: ', addr)
+        except:
+            print("error occurred")
 
 
     def receive_request(self):
