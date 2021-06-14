@@ -29,21 +29,31 @@ except Exception:
 # ADJUSTABLE PARAMETERS:
 HOST = "192.168.0.24"
 model_class = LinReg
-var_list = ["F1",	"F2",	"F3",	"F4",	"F5",	"F6",	"F7",	"F8",	"F9"]
-target_list = ["RMSD"]
-
+#var_list = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
+#target_list = ["RMSD"]
+#var_list = ["doc-avail", "hosp_avail", "income_1000s", "pop_density"]
+#target_list = ["death_rate_per_1000"]
+var_list = ["age", "bmi", "children"]
+target_list = ["charges"]
+#var_list = ["time_in_hospital",	"num_lab_procedures",	"num_procedures",	"num_medications",	"number_outpatient",	"number_emergency",	"number_inpatient",	"number_diagnoses"]
+#target_list = ["readmitted"]
+#var_list = ["Age",	"BMI"	,"Glucose",	"Insulin"	,"HOMA",	"Leptin",	"Adiponectin",	"Resistin"	,"MCP.1"]
+#target_list = ["Classification"]
+#var_list =  ["age",	"operation_year",	"nodes_detected"]	
+#target_list =  ["died_within_5y"]
 
 
 def learning_loop():
     config = config_setup.setup()
+    print(config)
     
     # load data
     data = Data(config["csv_location"], target_list, var_list)
     
     model = model_class([len(var_list)])
     
-    #scaler = DataScaler()
-    scaler = None
+    scaler = DataScaler()
+    #scaler = None
     
     # initialize the locker part of the aggregate method
     aggregator_locker = FedSGD_Client(model, data, scaler)

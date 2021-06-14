@@ -5,7 +5,6 @@ Created on Sat Mar 27 13:54:33 2021
 @author: Casper
 """
 import numpy as np
-import time
 
 
 class LinReg():
@@ -13,15 +12,14 @@ class LinReg():
         self.hidden_units = hidden_units
         self.m = np.random.normal(loc=0.0, scale=1.0, size=hidden_units)
         self.c = 0
-        self.lambda_ = 0.0001
 
     def call(self, inputs):
         return np.dot(inputs, self.m) + self.c
 
     def gradient(self, X, Y):
         Y_pred = self.call(X)  # The current predicted value of Y=
-        D_m = (-2/float(len(X))) * np.dot((Y - Y_pred), X) + self.lambda_*2*self.m # Derivative wrt m
-        D_c = (-2/float(len(X))) * sum(Y - Y_pred) + self.lambda_*2*self.c # Derivative wrt c
+        D_m = (-2/float(len(X))) * np.dot((Y - Y_pred), X) #+ self.lambda_*2*self.m # Derivative wrt m
+        D_c = (-2/float(len(X))) * sum(Y - Y_pred) #+ self.lambda_*2*self.c # Derivative wrt c
         return D_m, D_c
 
     def loss(self, X, y):
