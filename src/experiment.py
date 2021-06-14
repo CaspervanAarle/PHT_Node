@@ -14,10 +14,12 @@ import os, glob
 
 
 # SHOULD EDIT:
-dataset = "insurance_federated"
+dataset = "CASP_federated"
 data_loc = "C:\\Users\\Casper\\Projects\\MasterScriptie\\custom_projects\\model_training\\PHT_data_generator2"
-nodes_amount = 100
+nodes_amount = 10
 
+
+LEARNCONFIG_NAME = "experiment"
 # amount of pds's involved (accounts for first x datapoints)
 SETTINGS_LOC = os.getcwd() + "\\..\\settings\\"
 MAX_VIRTUAL_MEMORY = 10 * 1024 * 1024 # 10 MB
@@ -41,7 +43,7 @@ def start_json_lockers():
     for file in os.listdir(SETTINGS_LOC):
         if file.startswith("locker"):
             time.sleep(0.10)
-            subprocess.run('start python main.py -c {}'.format(file), shell=True)
+            subprocess.run('start python main.py -c {} -l learnconfig_{}.json'.format(file, LEARNCONFIG_NAME), shell=True)
             #subprocess.run('start python test.py', shell=True)
             #subprocess.run('start python test.py', shell=True)
             #os.system("start /B start cmd.exe @cmd /k \"cd {} & python nmain.py -c {}\"".format(CODE_LOC + "\\src", file))

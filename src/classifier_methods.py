@@ -9,6 +9,7 @@ import numpy as np
 
 class LinReg():
     def __init__(self, hidden_units):
+        print(hidden_units)
         self.hidden_units = hidden_units
         self.m = np.random.normal(loc=0.0, scale=1.0, size=hidden_units)
         self.c = 0

@@ -5,6 +5,8 @@ Created on Mon Apr  5 16:54:57 2021
 
 @author: Casper
 """
+import sys
+current_module = sys.modules[__name__]
 
 from ipc_server import IPC_Server
 from ndatasocket import Data
@@ -22,38 +24,30 @@ from phe import paillier
 try:
     public_key, private_key = keygen.load_keys()
 except Exception:
+    print("private and public key must first be generated before distribution and execution.")
+    print("... But for new, we create the keys")
     keygen.create_keys()
     public_key, private_key = keygen.load_keys()
      
      
 # ADJUSTABLE PARAMETERS:
 HOST = "192.168.0.24"
-model_class = LinReg
-#var_list = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
-#target_list = ["RMSD"]
-#var_list = ["doc-avail", "hosp_avail", "income_1000s", "pop_density"]
-#target_list = ["death_rate_per_1000"]
-var_list = ["age", "bmi", "children"]
-target_list = ["charges"]
-#var_list = ["time_in_hospital",	"num_lab_procedures",	"num_procedures",	"num_medications",	"number_outpatient",	"number_emergency",	"number_inpatient",	"number_diagnoses"]
-#target_list = ["readmitted"]
-#var_list = ["Age",	"BMI"	,"Glucose",	"Insulin"	,"HOMA",	"Leptin",	"Adiponectin",	"Resistin"	,"MCP.1"]
-#target_list = ["Classification"]
-#var_list =  ["age",	"operation_year",	"nodes_detected"]	
-#target_list =  ["died_within_5y"]
-
 
 def learning_loop():
-    config = config_setup.setup()
-    print(config)
+    config, learn_config = config_setup.setup()
+    print(str(config).replace(', ',',\n '))
+    print(str(learn_config).replace(', ',',\n '))
     
     # load data
-    data = Data(config["csv_location"], target_list, var_list)
+    data = Data(config["csv_location"], learn_config["target_list"], learn_config["var_list"])
     
-    model = model_class([len(var_list)])
+    model_class = getattr(current_module, learn_config["regressor"]) 
+    model = model_class([len(learn_config["var_list"])])
     
-    scaler = DataScaler()
-    #scaler = None
+    if(learn_config["standardization"]):
+        scaler = DataScaler()
+    else:
+        scaler = None
     
     # initialize the locker part of the aggregate method
     aggregator_locker = FedSGD_Client(model, data, scaler)
