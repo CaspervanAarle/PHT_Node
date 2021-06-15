@@ -9,12 +9,15 @@ class DataScaler():
     def __init__(self, mu=[], sigma=[]):
         self.mu = mu
         self.sigma = sigma
+        self.active = False
         
     def scale(self, inputs):
         return ( inputs - self.mu ) / self.sigma
     
     def set_mu_sigma(self, mu, sigma):
+        self.active = True
         self.mu = mu
         self.sigma = sigma
+        
         
         

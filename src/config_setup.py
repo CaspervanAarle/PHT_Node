@@ -9,6 +9,7 @@ import argparse
 import json
 import inquirer
 import os
+import time
 
 from os import path
 
@@ -112,5 +113,6 @@ def open_file(config_file):
         with open("../settings/" + config_file) as json_file:
             return json.load(json_file)
     except:
-        print("[ERROR] load error")
+        print("[ERROR] unable to load settings file '{}'".format(config_file))
+        time.sleep(10)
         return

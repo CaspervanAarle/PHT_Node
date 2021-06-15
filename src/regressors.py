@@ -9,7 +9,6 @@ import numpy as np
 
 class LinReg():
     def __init__(self, hidden_units):
-        print(hidden_units)
         self.hidden_units = hidden_units
         self.m = np.random.normal(loc=0.0, scale=1.0, size=hidden_units)
         self.c = 0
@@ -41,21 +40,19 @@ class LogReg():
         self.hidden_units = hidden_units
         self.m = np.random.normal(loc=0.0, scale=1.0, size=hidden_units)
         self.c = 0
-        self.lambda_ = 0.0001
+        #self.lambda_ = 0.0001
 
     def call(self, inputs):
         return self._sigmoid(np.dot(inputs, self.m) + self.c)
 
     def gradient(self, X, Y):
         Y_pred = self.call(X)
-        D_m = np.array(np.dot(X.T, Y_pred - Y)) + self.lambda_*2*self.m
-        D_c = Y_pred[0] - Y[0] + self.lambda_*2*self.c
+        D_m = np.array(np.dot(X.T, Y_pred - Y)) #+ self.lambda_*2*self.m
+        D_c = Y_pred[0] - Y[0] #+ self.lambda_*2*self.c
         return D_m, D_c
 
     def loss(self, X, y):
-        print(y)
         y_pred = self.call(X)
-        print(y_pred)
         if y[0] == 1:
             loss = -np.log(y_pred[0])
         else:
