@@ -4,11 +4,19 @@
 
 # PHT_Node
 
-This repository is part of the Personal Health Train Locker Thesis. 
+This repository is part of the Personal Health Train Locker Thesis. This PHT_Node implements part of a Federated Learning algorithm to apply Regression. Aggregators and Classifiers can be altered easily. Due to the need for simulating numerous Personal Data Stores (PDS), importing big libraries is omitted. A semi-privacy-preserving Homomorphic Encrypted Standardization method and AdaGrad is included for better convergence.
 
 
 
-### Manual
+## Usage
+
+### Homomorphic Encryption
+Before deploying this software to real distributed environment, be sure to share the same public and private keys over the PDS's. It automatically generates with ```main.py``` and ```experiment.py```.
+
+### Deploy
+
+### Local Experiment Deploy
+
 This project uses local Python Sockets as a form of communication. The PHT Node is the Locker containing some information. The central PHT Server can connect to multiple PHT Nodes, receiving requests and sending them back to the server.
 
 In ```main.py```, change the IP ADDRESS to localhost for local testing or you ipv4 default gateway for network connections.
