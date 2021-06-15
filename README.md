@@ -32,7 +32,7 @@ The 'learnconfig' file contains the features that need to be included in the lea
 ```
 
 ### Local Experiment Deploy
-
+The ```experiment.py``` file can generate many lockers, by generating different 'config' files that define different dat and a different deployment port, and by using the same 'learnconfig' file.
 
 
 ### Generator
