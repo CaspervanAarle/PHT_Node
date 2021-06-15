@@ -14,11 +14,24 @@ This repository is part of the Personal Health Train Locker Thesis. This PHT_Nod
 Before deploying this software to real distributed environment, be sure to share the same public and private keys over the PDS's. It automatically generates with ```main.py``` and ```experiment.py```.
 
 ### Deploy
+Like the PHT_Server, the PHT_Node also requires a 'config' and a 'learnconfig' file. Both are imported by an instance of a PDS. The 'config' file defines the data location of that specific locker and states at which port it must be hosted.
+```
+{
+  "config_name": "locker_1", 
+  "host_port": "5050", 
+  "csv_location": "C:\\Users\\Casper\\...\\readmission_hospital_federated\\1.csv"}
+```
+The 'learnconfig' file contains the features that need to be included in the learning process and the regressor type to be used. The same values must also reside in the 'learnconfig' file in the PHT_Server.
+```
+{
+	"config_name": "experiment4",
+	"var_list": ["time_in_hospital",	"num_lab_procedures",	"num_procedures",	"num_medications",	"number_outpatient",	"number_emergency",	"number_inpatient",	"number_diagnoses"],
+	"target_list":	["readmitted"],
+	"regressor": "LogReg"
+}
+```
 
 ### Local Experiment Deploy
-
-This project uses local Python Sockets as a form of communication. The PHT Node is the Locker containing some information. The central PHT Server can connect to multiple PHT Nodes, receiving requests and sending them back to the server.
-
 
 
 
