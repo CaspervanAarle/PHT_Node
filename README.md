@@ -35,9 +35,5 @@ The 'learnconfig' file contains the features that need to be included in the lea
 The ```experiment.py``` file can generate many lockers, by generating different 'config' files that define different dat and a different deployment port, and by using the same 'learnconfig' file.
 
 
-### Generator
-To generate multiple lockers (100?) as a simulation tool
-
-To be implemented
 
 See the [PHT_Data](https://github.com/CaspervanAarle/PHT_Synth_Data_Gen) to generate sample data
