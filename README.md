@@ -11,7 +11,7 @@ This repository is part of the Personal Health Train Locker Thesis. This PHT_Nod
 ## Usage
 
 ### Homomorphic Encryption
-Before deploying this software to real distributed environment, be sure to share the same public and private keys over the PDS's. It automatically generates with ```main.py``` and ```experiment.py```.
+Before deploying this software to real distributed environment, be sure to share the same public and private keys over the PDS's. It automatically generates with ```main.py``` and ```experiment.py```. This encryption is only used for sharing prescriptive statistics
 
 ### Deploy
 Like the PHT_Server, the PHT_Node also requires a 'config' and a 'learnconfig' file. Both are imported by an instance of a PDS. The 'config' file defines the data location of that specific locker and states at which port it must be hosted.
