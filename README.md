@@ -19,7 +19,7 @@ Like the PHT_Server, the PHT_Node also requires a 'config' and a 'learnconfig' f
 {
   "config_name": "locker_1", 
   "host_port": "5050", 
-  "csv_location": "C:\\Users\\Casper\\...\\readmission_hospital_federated\\1.csv"}
+  "csv_location": "C:\\Users\\...\\readmission_hospital_federated\\1.csv"}
 ```
 The 'learnconfig' file contains the features that need to be included in the learning process and the regressor type to be used. The same values must also reside in the 'learnconfig' file in the PHT_Server.
 ```
