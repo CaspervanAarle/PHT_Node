@@ -107,4 +107,9 @@ def learning_loop():
             print("[INFO] Encrypted stdev request 2 ended")
     
 if __name__ == "__main__" :
-    learning_loop()
+    print("[INFO] PDS is starting...")
+    try:
+        learning_loop()
+    except Exception as e:
+        print("[ERROR] {}".format(e))
+        time.sleep(20)

@@ -15,8 +15,10 @@ import glob
 
 # SHOULD EDIT:
 dataset = "readmission_hospital_federated"
-data_loc = "C:\\Users\\Casper\\Projects\\MasterScriptie\\custom_projects\\imported_from_github\\PHT_Synth_Data_Gen\\out"
+data_loc = "C:\\Users\\Casper\\Projects\\MasterScriptie\\custom_projects\\editing\\PHT_Synth_Data_Gen\\out"
 nodes_amount = 10
+
+STATIC_LOCKER_PORT = 5050
 
 LEARNCONFIG_NAME = "experiment4"
 SETTINGS_LOC = os.getcwd() + "\\..\\settings\\"
@@ -30,7 +32,7 @@ def generate_json_lockers():
     config_file = SETTINGS_LOC + "locker_{}.json"
     for i in range(nodes_amount):
         config_file.format(str(i+1))
-        out = {'config_name': "locker_" + str(i+1), "host_port": str(5050+i), "csv_location": DATA_DIR.format(str(i+1))}
+        out = {'config_name': "locker_" + str(i+1), "host_port": str(STATIC_LOCKER_PORT+i), "csv_location": DATA_DIR.format(str(i+1))}
         with open(config_file.format(str(i+1)),'w') as f:
             json.dump(out, f)
 
