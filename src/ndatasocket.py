@@ -15,11 +15,16 @@ class Data():
         self.is_personal_locker=True
         self.data_in = pd.read_csv(self.direc)[self.var_list].iloc[0].values.tolist()
         self.data_out = pd.read_csv(self.direc)[self.tar_list].iloc[0].values.tolist()
+        print(self.data_in)
+        
         
 
     def load_input(self):
         return np.array([self.data_in]).astype(float)
     
-    
     def load_target(self):
         return self.data_out
+    
+    def set_scaled_data(self, x_scaled):
+        self.data_in = x_scaled
+        print(self.data_in)

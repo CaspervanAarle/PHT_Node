@@ -14,13 +14,13 @@ import glob
 
 
 # SHOULD EDIT:
-dataset = "readmission_hospital_federated"
+dataset = "breast_cancer_federated"
 data_loc = "C:\\Users\\Casper\\Projects\\MasterScriptie\\custom_projects\\editing\\PHT_Synth_Data_Gen\\out"
-nodes_amount = 10
+nodes_amount = 30
 
 STATIC_LOCKER_PORT = 5050
 
-LEARNCONFIG_NAME = "experiment4"
+LEARNCONFIG_NAME = "experiment5"
 SETTINGS_LOC = os.getcwd() + "\\..\\settings\\"
 MAX_VIRTUAL_MEMORY = 10 * 1024 * 1024 # 10 MB
 DATA_DIR = data_loc + "\\{}\\".format(dataset) + "{}.csv"

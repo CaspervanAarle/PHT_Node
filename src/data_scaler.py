@@ -12,7 +12,8 @@ class DataScaler():
         self.active = False
         
     def scale(self, inputs):
-        return ( inputs - self.mu ) / self.sigma
+        x_scale = ( inputs - self.mu ) / self.sigma
+        return x_scale
     
     def set_mu_sigma(self, mu, sigma):
         self.active = True

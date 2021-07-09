@@ -19,6 +19,7 @@ from regressors import LinReg, LogReg
 from client import Client
 from data_scaler import DataScaler
 import keygen
+import dhgen
 
 # homomorphic encryption
 from phe import paillier
@@ -55,9 +56,12 @@ def learning_loop():
     # connect to server
     connection = IPC_Server(HOST, config['host_port'])
     
+    # DH key agreement
+    dhgenerator = dhgen.DHGenerator()
+    
     while True:
         weights = connection.receive_request()
-        print(weights)
+        #print("Request details:\n{}".format(weights))
         if weights[2] == 0:
             print("[INFO] Validation request received")
             model.set_weights((weights[0], weights[1]))
@@ -105,6 +109,48 @@ def learning_loop():
                 scaler.set_mu_sigma(means, stdevs)
             connection.respond("")
             print("[INFO] Encrypted stdev request 2 ended")
+            
+        if weights[2] == 7:
+            print("[INFO] Request secret share")
+            connection.respond(dhgenerator.generate_key())
+            print("[INFO] Request secret share ended")
+        
+        if weights[2] == 8:
+            print("[INFO] Request secret share 2")
+            dhgenerator.generate_shared_keys(weights[0])
+            connection.respond("")
+            print("[INFO] Request secret share 2 ended")
+        
+        if weights[2] == 9:
+            print("[INFO] Request Diffie-Hellman Secure Derivative Aggregation")
+            model.set_weights(weights)
+            derivative = client.learn()
+            masked_derivative = dhgenerator.mask_weights(derivative)
+            connection.respond(masked_derivative)
+            print("[INFO] Request Diffie-Hellman Secure Derivative ended")
+            
+        if weights[2] == 10:
+            print("[INFO] Request Diffie-Hellman Standardization Aggregation")
+            feature_input = data.load_input()[0]
+            feature_input_squared = [feature**2 for feature in feature_input.copy()]
+            total = list(feature_input) + list(feature_input_squared)
+            masked_features = dhgenerator.mask_weights(total)
+            connection.respond(masked_features)
+            print("[INFO] Request Diffie-Hellman Standardization Aggregation ended")
+            
+        if weights[2] == 11:
+            print("[INFO] Encrypted data request received (get)")
+            values = data.load_input()[0]
+            enc_data = [public_key.encrypt(x) for x in values]
+            connection.respond(enc_data)
+            print("[INFO] Encrypted data request ended")
+        if weights[2] == 12:
+            print("[INFO] Encrypted scaled data request 2 received (set)")
+            x_scaled = [private_key.decrypt(x) for x in weights[0]]
+            data.set_scaled_data(x_scaled)
+            connection.respond("")
+            print("[INFO] Encrypted scaled data request 2 ended")
+        
     
 if __name__ == "__main__" :
     print("[INFO] PDS is starting...")
