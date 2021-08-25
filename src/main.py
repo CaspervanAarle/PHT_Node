@@ -27,13 +27,13 @@ try:
     public_key, private_key = keygen.load_keys()
 except Exception:
     print("private and public key must first be generated before distribution and execution.")
-    print("... But for new, we create the keys")
+    print("... But for now, we create the keys")
     keygen.create_keys()
     public_key, private_key = keygen.load_keys()
      
      
 # ADJUSTABLE PARAMETERS:
-HOST = "192.168.0.24"
+HOST = "192.168.0.11"
 
 def learning_loop():
     config, learn_config = config_setup.setup()
@@ -59,9 +59,13 @@ def learning_loop():
     # DH key agreement
     dhgenerator = dhgen.DHGenerator()
     
+    #timer
+    total_time = 0
+    
     while True:
         weights = connection.receive_request()
-        #print("Request details:\n{}".format(weights))
+        #start_time = 0
+        #end_time = 0
         if weights[2] == 0:
             print("[INFO] Validation request received")
             model.set_weights((weights[0], weights[1]))
@@ -113,12 +117,14 @@ def learning_loop():
         if weights[2] == 7:
             print("[INFO] Request secret share")
             connection.respond(dhgenerator.generate_key())
+            end_time = time.time()
             print("[INFO] Request secret share ended")
         
         if weights[2] == 8:
             print("[INFO] Request secret share 2")
             dhgenerator.generate_shared_keys(weights[0])
             connection.respond("")
+            end_time = time.time()
             print("[INFO] Request secret share 2 ended")
         
         if weights[2] == 9:
@@ -131,25 +137,37 @@ def learning_loop():
             
         if weights[2] == 10:
             print("[INFO] Request Diffie-Hellman Standardization Aggregation")
-            feature_input = data.load_input()[0]
-            feature_input_squared = [feature**2 for feature in feature_input.copy()]
-            total = list(feature_input) + list(feature_input_squared)
+            features = data.load_input()[0]
+            if isinstance(model, LinReg):
+                features = [*features, *data.load_target()]
+            features_squared = [feature**2 for feature in features.copy()]
+            total = list(features) + list(features_squared)
             masked_features = dhgenerator.mask_weights(total)
             connection.respond(masked_features)
             print("[INFO] Request Diffie-Hellman Standardization Aggregation ended")
             
         if weights[2] == 11:
             print("[INFO] Encrypted data request received (get)")
-            values = data.load_input()[0]
-            enc_data = [public_key.encrypt(x) for x in values]
+            features = data.load_input()[0]
+            if isinstance(model, LinReg):
+                features = [*features, *data.load_target()]
+            enc_data = [public_key.encrypt(x) for x in features]
             connection.respond(enc_data)
             print("[INFO] Encrypted data request ended")
         if weights[2] == 12:
             print("[INFO] Encrypted scaled data request 2 received (set)")
-            x_scaled = [private_key.decrypt(x) for x in weights[0]]
-            data.set_scaled_data(x_scaled)
+            scaled_data = [private_key.decrypt(x) for x in weights[0]]
+            if isinstance(model, LinReg):
+                data.set_scaled_data(scaled_data[:-1], [scaled_data[-1]])
+            if isinstance(model, LogReg):
+                data.set_scaled_data(scaled_data)
             connection.respond("")
             print("[INFO] Encrypted scaled data request 2 ended")
+        
+        
+        #time_lapsed = end_time - start_time
+        #total_time += time_lapsed
+        #print("Cumulative time lapsed: {}".format(total_time))
         
     
 if __name__ == "__main__" :
