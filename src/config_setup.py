@@ -21,9 +21,7 @@ def new_config():
     goal_dir = "../settings/config_" + config_name + ".json"
     if(path.exists(goal_dir)):
         print("[WARNING] Overwriting existing config")
-    
-
-    
+        
     host_port = input("host-port:")
     out['host_port'] = host_port
     
@@ -62,7 +60,7 @@ def setup():
     else:
         config_files = ["<new_config>"]
         for file in os.listdir("../settings"):
-            if file.endswith(".json") and file.startswith("locker"):
+            if file.endswith(".json") and file.startswith("config"):
                 config_files.append(file) 
         questions = [
             inquirer.List(
@@ -102,7 +100,7 @@ def setup():
             chosen_learnconfig = new_learnconfig()
         ### if user chooses existing config file
         else:
-            chosen_learnconfig = open_file(answer["config"])
+            chosen_learnconfig = open_file(answer["learnconfig"])
 
     return chosen_config, chosen_learnconfig
 
