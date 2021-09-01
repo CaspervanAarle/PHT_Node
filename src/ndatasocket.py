@@ -28,9 +28,10 @@ class Data():
         print("target values: ", self.data_out)
         return self.data_out
     
-    def set_scaled_data(self, x_scaled, y_scaled):
+    def set_scaled_data(self, x_scaled, y_scaled=None):
         self.data_in = x_scaled
         print(self.data_in)
-        self.data_out = y_scaled
+        if y_scaled is not None:
+            self.data_out = y_scaled
         print(self.data_out)
         

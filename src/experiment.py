@@ -14,10 +14,10 @@ import glob
 
 
 # SHOULD EDIT:
-dataset = "CASP_federated"
+dataset = "TWOC_subset_federated"
 data_loc = "C:\\Users\\Casper\\Projects\\MasterScriptie\\custom_projects\\editing\\PHT_Preprocessing\\out"
 nodes_amount = 150
-LEARNCONFIG_NAME = "experiment8_9"
+LEARNCONFIG_NAME = "experiment10_1"
 
 # MOSTLY STATIC:
 STATIC_LOCKER_PORT = 5050
